@@ -11,13 +11,13 @@ export default function Page() {
     setLanguage(newLanguage); // Update language when changed
   };
   const images = [
-    '/images/9AEE9CE6-C123-4BDA-8F71-F17BFCC87422.jpg',
-    '/images/39CB9A00-4ACF-4748-B9DA-6AAF13DDE575.jpg',
-    '/images/77B456B5-3E9C-45F2-A12C-68D0FE8321D2.jpg',
-    '/images/373910c136cf7550cbbfc063ba21233b.jpg',
-    '/images/89097756-7648-48B0-AB9C-D52234238A46.jpg',
-    '/images/A2A68580-DA58-4478-A667-6262B6391B17.jpg',
-    '/images/BC922305-AC6B-4443-9FF1-AB42FC4D8FE5.jpg',
+    '/images/9AEE9CE6-C123-4BDA-8F71-F17BFCC87422.JPG',
+    '/images/39CB9A00-4ACF-4748-B9DA-6AAF13DDE575.JPG',
+    '/images/77B456B5-3E9C-45F2-A12C-68D0FE8321D2.JPG',
+    '/images/373910c136cf7550cbbfc063ba21233b.JPG',
+    '/images/89097756-7648-48B0-AB9C-D52234238A46.JPG',
+    '/images/A2A68580-DA58-4478-A667-6262B6391B17.JPG',
+    '/images/BC922305-AC6B-4443-9FF1-AB42FC4D8FE5.JPG',
   ];
   return (
     <section>
