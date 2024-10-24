@@ -38,9 +38,10 @@ export async function POST(req: NextRequest) {
         ],
       },
     });
+    // @ts-ignore
     const labels = visionResponse.data.responses[0].labelAnnotations;
     // const dominantColors = visionResponse.data.responses[0].imagePropertiesAnnotation.dominantColors.colors;
-
+    // @ts-ignore
     const labelDescriptions = labels.map((label) => label.description).join(', ');
     // const colorDescriptions = dominantColors
     //   .map((color) => `RGB(${color.color.red},${color.color.green},${color.color.blue})`)
