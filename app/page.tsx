@@ -22,7 +22,7 @@ export default function Page() {
   return (
     <section>
       <LanguageSwitcher onLanguageChange={handleLanguageChange} />
-      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+      <h1 className="mb-8  font-semibold tracking-tighter">
         {language === 'en' ? 'My Portfolio' : '我的作品集'}
       </h1>
       <p className="mb-4">

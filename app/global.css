@@ -32,7 +32,13 @@
 html {
   min-width: 360px;
 }
-
+main {
+  font-family: "Afacad Flux", sans-serif;
+  font-size: 1.25rem;
+}
+h1 {
+  font-size: 2rem;
+}
 .prose .anchor {
   @apply absolute invisible no-underline;
 

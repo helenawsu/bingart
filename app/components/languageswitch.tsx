@@ -10,7 +10,7 @@ export default function LanguageSwitcher({ onLanguageChange }) {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 my-3">
       
       <div
         className={`relative inline-block w-12 h-6 transition duration-200 ease-linear rounded-full
