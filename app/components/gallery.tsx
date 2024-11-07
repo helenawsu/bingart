@@ -38,7 +38,7 @@ export default function Gallery({ images }: GalleryProps) {
               alt={`Gallery image ${index + 1}`}
               layout="fill"
               objectFit="cover"
-              className="rounded-lg"
+              className=""
             />
           </div>
         ))}
