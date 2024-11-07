@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
     );
 
     // Handle the output as a binary stream and convert it to base64
+    // @ts-ignore
     const resultArray = await Promise.all(output.map(async (stream: ReadableStream) => {
       const reader = stream.getReader();
       const chunks: Uint8Array[] = [];
