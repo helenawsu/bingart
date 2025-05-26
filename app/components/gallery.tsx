@@ -4,17 +4,19 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import ImageModal from './imagemodal'; // Import the new modal component
+import { language } from 'googleapis/build/src/apis/language';
 
 interface GalleryProps {
-  images: string[];
+  images: { url: string }[];
+  language: string; // Language prop for the component
 }
 
-export default function Gallery({ images }: GalleryProps) {
+export default function Gallery({ images }: GalleryProps, language: string) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const openModal = (src: string) => {
-    setSelectedImage(src);
+  const openModal = (src: any) => {
+    setSelectedImage(src.url);
     setIsOpen(true);
   };
 
@@ -34,7 +36,7 @@ export default function Gallery({ images }: GalleryProps) {
             onClick={() => openModal(src)}
           >
             <Image
-              src={src}
+              src={src.url}
               alt={`Gallery image ${index + 1}`}
               layout="fill"
               objectFit="cover"
@@ -49,6 +51,7 @@ export default function Gallery({ images }: GalleryProps) {
         isOpen={isOpen}
         selectedImage={selectedImage}
         closeModal={closeModal}
+        language={language}
       />
     </>
   );

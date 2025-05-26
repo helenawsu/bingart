@@ -19,7 +19,7 @@
     "googleapis": "^144.0.0",
     "next": "canary",
     "next-mdx-remote": "^4.4.1",
-    "openai": "^4.68.4",
+    "openai": "^4.103.0",
     "postcss": "^8.4.35",
     "react": "18.2.0",
     "react-dom": "18.2.0",

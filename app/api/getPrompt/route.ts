@@ -17,12 +17,14 @@ async function createFile(filePath) {
   return result.id;
 }
 export async function POST(req: NextRequest) {
-  const { prompt, imagePath, language } = await req.json();
+  let { prompt, imagePath, language } = await req.json();
 
-  if (!prompt || !imagePath) {
+  if (!imagePath) {
     return NextResponse.json({ error: 'Prompt or image path is missing' }, { status: 400 });
   }
-
+  if (!prompt) {
+    prompt = `based on the image analysis, generate a prompt to feed into an image-generation model. The prompt should: Specify an art style or medium (e.g., ‘oil painting in the style of Klimt’, ‘high-contrast noir photograph’, ‘surreal watercolor dreamscape’)\n• Suggest any key lighting, color, or composition tweaks to transform it into a new artwork\n• Be 1–2 sentences long, vivid, and actionable for an AI image model.`
+  }
   try {
     // Construct the path to the image in the public folder
     const imageFilePath = path.join(process.cwd(), 'public', imagePath);
@@ -37,12 +39,15 @@ export async function POST(req: NextRequest) {
     const messages: { role: 'system' | 'user' | 'assistant'; content: any; name?: string }[] = [
       {
         role: 'system',
-        content: 'You are an experienced art guide and critic. Analyze the artistic style, technique, and overall quality of the provided painting. Focus on drawing style, use of color, and other relevant artistic aspects.',
+        content: 
+        `You are a creative prompt engineer. You will first analyze an image in terms of composition, color palette, mood, focal elements, textures, etc., 
+        then you’ll craft a single, detailed instruction for an image-generation model (e.g. Stable Diffusion or DALL·E) 
+        that captures the essence of the user’s photo and suggest an evocative art style or approach.`
       },
       {
         role: 'user',
       content: [
-        { type: "input_text", text: `Analyze this painting. The user asks: "${prompt}". Keep your response within 100 words.` + languageAddOn },
+        { type: "input_text", text: ` "${prompt}` },
         {
           type: "input_image",
           file_id: fileId,
@@ -60,6 +65,7 @@ export async function POST(req: NextRequest) {
     console.log('OpenAI Vision Response:', gptResponse);
 
     const aiResponse = gptResponse.output_text ?? 'No response content available';
+    console.log('AI Response:', aiResponse);
     return NextResponse.json({ response: aiResponse });
   } catch (error) {
     console.error('Error in OpenAI Vision API request:', error);

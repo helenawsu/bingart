@@ -33,6 +33,19 @@ export default function Page() {
         return;
       }
 
+
+      const promptResponse = await fetch('/api/getPrompt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imagePath: imageUrl, prompt: prompt }),
+      });
+      const stylePrompt = await promptResponse.json();
+      if (stylePrompt.text) {
+        setPrompt(stylePrompt.text);
+      } else {
+        console.error('Error in generating styled image:', stylePrompt.error);
+      }
+
       // Step 2: Use the uploaded image URL with Replicate for style transfer
       const styleResponse = await fetch('/api/generateImage', {
         method: 'POST',

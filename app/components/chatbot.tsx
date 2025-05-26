@@ -5,9 +5,10 @@ import axios from 'axios';
 
 interface ChatBotProps {
   selectedImage: string | null;  // The image path from the parent component
+  language: string;  // Language for the AI response
 }
 
-export default function ChatBot({ selectedImage }: ChatBotProps) {
+export default function ChatBot({ selectedImage, language }: ChatBotProps) {
   const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hello! Let me analyze the painting for you...' }]);
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,6 +23,7 @@ export default function ChatBot({ selectedImage }: ChatBotProps) {
           const response = await axios.post('/api/chat', {
             prompt: "Please provide an art critique for this painting.",
             imagePath: selectedImage,  // Image path from public/images
+            language: language,
           });
 
           const botResponse = { sender: 'bot', text: response.data.response };

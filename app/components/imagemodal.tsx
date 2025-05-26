@@ -9,9 +9,10 @@ interface ImageModalProps {
   isOpen: boolean;
   selectedImage: string | null;  // Image path from public/images
   closeModal: () => void;
+  language: string; 
 }
 
-export default function ImageModal({ isOpen, selectedImage, closeModal }: ImageModalProps) {
+export default function ImageModal({ isOpen, selectedImage, closeModal, language }: ImageModalProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -64,7 +65,7 @@ export default function ImageModal({ isOpen, selectedImage, closeModal }: ImageM
 
                   {/* Right Side: Chatbot Interface */}
                   <div className="w-1/2">
-                    <ChatBot selectedImage={selectedImage} />
+                    <ChatBot selectedImage={selectedImage} language={language} />
                   </div>
                 </div>
               </Dialog.Panel>
