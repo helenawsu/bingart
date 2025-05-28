@@ -7,24 +7,26 @@ import { OpenAI } from 'openai';
 const openai = new OpenAI({
   apiKey: process.env.AI_API_KEY,
 });
-// Function to create a file with the Files API
-async function createFile(filePath) {
-  console.log('Creating file for OpenAI Vision API:', filePath);
-  const fileContent = fs.createReadStream(filePath);
+async function createFile(res) {
+  
   const result = await openai.files.create({
-    file: fileContent,
+    file: res.body,        
     purpose: "vision",
   });
   return result.id;
 }
 export async function POST(req: NextRequest) {
-  const { image, prompt } = await req.json();
-  const imageFilePath = path.join(process.cwd(), 'public', image);
-  const fileId = await createFile(imageFilePath);
-  if (!image || !prompt) {
+  const { imageurl, prompt } = await req.json();
+  console.log("prompt", prompt);
+  // console.log('Received image:', imageurl);
+  if (!imageurl || !prompt) {
     return NextResponse.json({ error: 'Image and prompt are required' }, { status: 400 });
   }
+  
     try {
+      const res = await fetch(imageurl);
+
+      // const fileId = await createFile(res);
   const response = await openai.responses.create({
   model: "gpt-4.1",
   input: [
@@ -34,7 +36,7 @@ export async function POST(req: NextRequest) {
         { type: "input_text", text: prompt },
         {
           type: "input_image",
-          file_id: fileId,
+          image_url: imageurl,
           detail: "auto",
         },
       ],
@@ -43,28 +45,37 @@ export async function POST(req: NextRequest) {
   tools: [{ type: "image_generation" }],
   
 });
-const imageData = response.output
-  .filter((output) => output.type === "image_generation_call")
-  .map((output) => output.result);
+console.log('Full response:', response);
+// 1) Grab the output array
+const outputs = response.output as Array<{
+  type: string;
+  content?: any[];
+}>;
+console.log('Outputs:', outputs);
+// 2) Find the “message” entry and get its content
+const message = outputs.find((o) => o.type === 'message');
+if (!message?.content) {
+  console.error('No assistant message content:', outputs);
+  // handle error…
+}
+console.log('Message content:', message?.content);
+// 3) Inside that content, filter for image tool calls
+const imageData = (message?.content as any[])
+  .filter((c) => c.type === 'image_generation_call')
+  .map((c) => c.result as string);
 
+console.log('Extracted image data:', imageData);
 if (imageData.length > 0) {
-  const imageBase64 = imageData[0];
-  if (typeof imageBase64 === "string") {
+  const base64 = imageData[0] as string;
+  const dataUri = `data:image/png;base64,${base64}`;
+  return NextResponse.json({ imageUrl: dataUri });
     // const fs = await import("fs");
     // fs.writeFileSync("output.png", new Uint8Array(Buffer.from(imageBase64, "base64")));
-  } else {
-    console.error("imageBase64 is not a string:", imageBase64);
-  }
+
 } else {
   console.log(response.output);
 }
-const imageBase64 = imageData[0] as string;
-
-// build your data-URI:
-const dataUri = `data:image/png;base64,${imageBase64}`;
-
-// and return it as JSON:
-return NextResponse.json({ imageUrl: dataUri });
+ return NextResponse.json({ error: 'Failed to generate styled image result image url is not string' }, { status: 500 });
     } catch (error) {
   console.error('Error generating image:', error);
     return NextResponse.json({ error: 'Failed to generate styled image' }, { status: 500 });

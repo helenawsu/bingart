@@ -10,6 +10,7 @@ export default function Page() {
 
   const handleImageUpload = (uploadedImage: string | null) => {
     setImage(uploadedImage);
+
   };
 
   const handleGenerateStyledImage = async () => {
@@ -40,21 +41,22 @@ export default function Page() {
         body: JSON.stringify({ imagePath: imageUrl, prompt: prompt }),
       });
       const stylePrompt = await promptResponse.json();
-      if (stylePrompt.text) {
-        setPrompt(stylePrompt.text);
+      if (stylePrompt.response) {
+        setPrompt(stylePrompt.response);
       } else {
-        console.error('Error in generating styled image:', stylePrompt.error);
+        console.error('prompt is empty', stylePrompt.error);
       }
 
       // Step 2: Use the uploaded image URL with Replicate for style transfer
       const styleResponse = await fetch('/api/generateImage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: imageUrl, prompt }),
+        body: JSON.stringify({ imageurl: image, prompt: stylePrompt.response }),
       });
 
       const styleData = await styleResponse.json();
       if (styleData.imageUrl) {
+        console.log('Generated image URL:', styleData.imageUrl);
         setGeneratedImage(styleData.imageUrl);
       } else {
         console.error('Error in generating styled image:', styleData.error);
