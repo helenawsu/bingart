@@ -16,6 +16,7 @@ async function createFile(res) {
   return result.id;
 }
 export async function POST(req: NextRequest) {
+  const start = Date.now();
   const { imageurl, prompt } = await req.json();
   console.log("prompt", prompt);
   // console.log('Received image:', imageurl);
@@ -25,8 +26,8 @@ export async function POST(req: NextRequest) {
   
     try {
       const res = await fetch(imageurl);
-
-      // const fileId = await createFile(res);
+      console.log('Fetch image time:', Date.now() - start, 'ms');
+    // const fileId = await createFile(res);
   const response = await openai.responses.create({
   model: "gpt-4.1",
   input: [
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
         {
           type: "input_image",
           image_url: imageurl,
-          detail: "auto",
+          detail: "low",
         },
       ],
     },
@@ -45,6 +46,7 @@ export async function POST(req: NextRequest) {
   tools: [{ type: "image_generation" }],
   
 });
+console.log('OpenAI response time:', Date.now() - start, 'ms');
 console.log('Full response:', response);
 // 1) Grab the output array
 const outputs = response.output as Array<{
