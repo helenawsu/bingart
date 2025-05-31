@@ -53,20 +53,19 @@ const outputs = response.output as Array<{
 }>;
 console.log('Outputs:', outputs);
 // 2) Find the “message” entry and get its content
-const message = outputs.find((o) => o.type === 'message');
-if (!message?.content) {
-  console.error('No assistant message content:', outputs);
+const message = outputs.find((o) => o.type === 'image_generation_call');
+const image_response = message as any;
+if (!image_response?.result) {
+  console.error('No assistant message result:', outputs);
   // handle error…
 }
-console.log('Message content:', message?.content);
+console.log('image gen call content:', image_response);
 // 3) Inside that content, filter for image tool calls
-const imageData = (message?.content as any[])
-  .filter((c) => c.type === 'image_generation_call')
-  .map((c) => c.result as string);
+const imageData = (image_response.result);
 
 console.log('Extracted image data:', imageData);
 if (imageData.length > 0) {
-  const base64 = imageData[0] as string;
+  const base64 = imageData as string;
   const dataUri = `data:image/png;base64,${base64}`;
   return NextResponse.json({ imageUrl: dataUri });
     // const fs = await import("fs");

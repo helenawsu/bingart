@@ -55,6 +55,7 @@ export default function Page() {
       });
 
       const styleData = await styleResponse.json();
+      console.log('Style Data:', styleData);
       if (styleData.imageUrl) {
         console.log('Generated image URL:', styleData.imageUrl);
         setGeneratedImage(styleData.imageUrl);
