@@ -3,7 +3,7 @@ import Replicate from 'replicate';
 import fs from 'fs';
 import path from 'path';
 import { OpenAI } from 'openai';
-
+export const maxDuration = 60; //please give me more time TATAT
 const openai = new OpenAI({
   apiKey: process.env.AI_API_KEY,
 });
