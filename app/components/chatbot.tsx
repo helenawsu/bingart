@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 interface ChatBotProps {
@@ -13,23 +13,36 @@ export default function ChatBot({ selectedImage, language }: ChatBotProps) {
   const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hello! Let me analyze the painting for you...' }]);
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   // Fetch AI response when the component mounts
   useEffect(() => {
     if (selectedImage) {
+      // Clear previous messages immediately when a new image is selected
+      setMessages([{ sender: 'bot', text: 'Hello! Let me analyze the painting for you...' }]);
+      // Abort any previous request
+      if (abortRef.current) {
+        abortRef.current.abort();
+      }
+      const controller = new AbortController();
+      abortRef.current = controller;
+
       const fetchAICritique = async () => {
         try {
-          setLoading(true); // Start loading state
-          
+          setLoading(true);
           const response = await axios.post('/api/chat', {
             prompt: "Please provide an art critique for this painting.",
-            imagePath: selectedImage,  // Image path from public/images
+            imagePath: selectedImage,
             language: language,
-          });
+          }, { signal: controller.signal });
 
           const botResponse = { sender: 'bot', text: response.data.response };
           setMessages([{ sender: 'bot', text: botResponse.text }]); // Update with critique
         } catch (error) {
+          if (axios.isCancel?.(error) || error.name === 'CanceledError') {
+            // Request was cancelled, do nothing
+            return;
+          }
           console.error('Error fetching AI critique:', error);
           setMessages([{ sender: 'bot', text: 'Failed to analyze the image. Please try again later.' }]);
         } finally {
@@ -38,8 +51,13 @@ export default function ChatBot({ selectedImage, language }: ChatBotProps) {
       };
 
       fetchAICritique();
+
+      // Cleanup: abort on unmount or when selectedImage changes
+      return () => {
+        controller.abort();
+      };
     }
-  }, [selectedImage]);
+  }, [selectedImage, language]);
 
   const handleUserInput = async (e: React.FormEvent) => {
     e.preventDefault();

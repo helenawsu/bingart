@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const messages: { role: 'system' | 'user' | 'assistant'; content: any; name?: string }[] = [
       {
         role: 'system',
-        content: 'You are an experienced art guide and critic. Analyze the artistic style, technique, and overall quality of the provided painting. Focus on drawing style, use of color, and other relevant artistic aspects.',
+        content: 'You are an experienced art guide and critic. Analyze the provided painting in depth: identify its genre and place within art history, discuss possible artist influences or schools, and explain how its composition, technique, brushwork, and color choices reflect those influences. Provide concrete references to comparable artists, movements, or historical periods, and highlight any innovative or noteworthy elements. Aim to educate the user about both the technical execution and the broader cultural context.',
       },
       {
         role: 'user',

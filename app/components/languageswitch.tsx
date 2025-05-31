@@ -14,7 +14,7 @@ export default function LanguageSwitcher({ onLanguageChange }) {
       
       <div
         className={`relative inline-block w-12 h-6 transition duration-200 ease-linear rounded-full
-          ${language === 'zh' ? 'bg-blue-500' : 'bg-gray-300'}`}
+          ${language === 'zh' ? 'bg-black' : 'bg-gray-300'}`}
       >
         <span
           className={`absolute left-0 top-0 h-6 w-6 bg-white border-2 border-gray-300 rounded-full shadow-md transform transition
@@ -27,7 +27,7 @@ export default function LanguageSwitcher({ onLanguageChange }) {
           onChange={toggleLanguage}
         />
       </div>
-      <span className="text-white">{language === 'en' ? 'English' : '中文'}</span>
+      <span className="text-black">{language === 'en' ? 'English' : '中文'}</span>
     </div>
   );
 }

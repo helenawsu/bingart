@@ -19,7 +19,7 @@ console.log("language in page.tsx", language);
       </h1>
       <section>
   {language === 'en' ? (
-    <pre className="mb-4">{`let it happen
+    <pre className="mb-4 whitespace-pre-wrap break-words">{`let it happen
 let it come 
 let it leave
 let it happen
@@ -34,7 +34,7 @@ I wish to capture, through words and brushstrokes,
 those gentle and moving moments of life, 
 allowing them to shine with enduring brilliance as time flows on.`}</pre>
   ) : (
-    <pre className="mb-4">
+    <pre className="mb-4 whitespace-pre-wrap break-words text-xl">
 {`来来往往，
 即使纵然消失，
 依然实实在在。

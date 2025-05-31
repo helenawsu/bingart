@@ -48,10 +48,10 @@ export default function ImageModal({ isOpen, selectedImage, closeModal, language
                   X
                 </button>
 
-                {/* Split layout: Image on the left, ChatBot on the right */}
-                <div className="flex">
-                  {/* Left Side: Image */}
-                  <div className="w-1/2 pr-4">
+                {/* Responsive layout: Image on top for mobile, side by side for desktop */}
+                <div className="flex flex-col md:flex-row">
+                  {/* Image section */}
+                  <div className="w-full md:w-1/2 md:pr-4 mb-4 md:mb-0">
                     {selectedImage && (
                       <Image
                         src={selectedImage}
@@ -64,8 +64,8 @@ export default function ImageModal({ isOpen, selectedImage, closeModal, language
                     )}
                   </div>
 
-                  {/* Right Side: Chatbot Interface */}
-                  <div className="w-1/2">
+                  {/* Chatbot section */}
+                  <div className="w-full md:w-1/2">
                     <ChatBot selectedImage={selectedImage} language={language} />
                   </div>
                 </div>
