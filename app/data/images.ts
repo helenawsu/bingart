@@ -20,10 +20,14 @@ export interface GalleryImage {
       url: '/images/373910c136cf7550cbbfc063ba21233b.jpg',
       time: '2024-05-04',
     },
-    // {
-    //   url: '/images/89097756-7648-48B0-AB9C-D52234238A46.jpg',
-    //   time: '2024-05-05',
-    // },
+    {
+      url: '/images/8d645cc143facecfd6e0145c0d9f5cf8.jpg',
+      time: '2024-05-04',
+    },
+    {
+      url: '/images/a44f389a0e45d796647b7e8718212b39_Original.jpg',
+      time: '2024-05-05',
+    },
     // {
     //   url: '/images/A2A68580-DA58-4478-A667-6262B6391B17.jpg',
     //   time: '2024-05-06',
