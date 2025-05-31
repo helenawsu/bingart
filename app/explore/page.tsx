@@ -25,12 +25,20 @@ export default function Page() {
         body: JSON.stringify({ image }),
       });
 
-      const uploadData = await uploadResponse.json();
+      let uploadData;
+      {
+        const text = await uploadResponse.text();
+        try {
+          uploadData = JSON.parse(text);
+        } catch {
+          throw new Error(`Upload error: ${text}`);
+        }
+      }
       const imageUrl = uploadData.imageUrl;
 
       if (!imageUrl) {
         console.error('Failed to upload image', uploadData.error);
-        setPrompt(uploadData.error);
+        setPrompt(uploadData.error || 'Failed to upload image');
         setLoading(false);
         return;
       }
@@ -41,11 +49,21 @@ export default function Page() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imagePath: imageUrl, prompt: prompt }),
       });
-      const stylePrompt = await promptResponse.json();
+
+      let stylePrompt;
+      {
+        const text = await promptResponse.text();
+        try {
+          stylePrompt = JSON.parse(text);
+        } catch {
+          throw new Error(`Prompt error: ${text}`);
+        }
+      }
       if (stylePrompt.response) {
         setPrompt(stylePrompt.response);
       } else {
         console.error('prompt is empty', stylePrompt.error);
+        setPrompt(stylePrompt.error || 'Prompt generation failed');
       }
 
       // Step 2: Use the uploaded image URL with Replicate for style transfer
@@ -56,11 +74,13 @@ export default function Page() {
       });
 
       let styleData;
-      try {
-        styleData = await styleResponse.json();
-      } catch (err) {
+      {
         const text = await styleResponse.text();
-        throw new Error(`Style generation error: ${text}`);
+        try {
+          styleData = JSON.parse(text);
+        } catch {
+          throw new Error(`Style generation error: ${text}`);
+        }
       }
       console.log('Style Data:', styleData);
       if (styleData.imageUrl) {
