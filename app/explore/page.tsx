@@ -34,7 +34,7 @@ export default function Page() {
         setLoading(false);
         return;
       }
-
+      console.log('Uploaded image ');
 
       const promptResponse = await fetch('/api/getPrompt', {
         method: 'POST',

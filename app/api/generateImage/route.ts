@@ -76,8 +76,8 @@ if (imageData.length > 0) {
 }
  return NextResponse.json({ error: 'Failed to generate styled image result image url is not string' }, { status: 500 });
     } catch (error) {
-  console.error('Error generating image:', error);
-    return NextResponse.json({ error: 'Failed to generate styled image' }, { status: 500 });
+  console.error('Error generating image:', error.message);
+    return NextResponse.json({ error: "Error generating image: "+error.message }, { status: 500 });
     }
 
 
