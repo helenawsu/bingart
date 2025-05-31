@@ -9,6 +9,7 @@ interface ChatBotProps {
 }
 
 export default function ChatBot({ selectedImage, language }: ChatBotProps) {
+  console.log("language in chatbot.tsx", language);
   const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hello! Let me analyze the painting for you...' }]);
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);

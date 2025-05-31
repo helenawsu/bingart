@@ -22,9 +22,15 @@ export async function POST(req: NextRequest) {
       {
         role: 'system',
         content: 
-        `You are a creative prompt engineer. You will first analyze an image in terms of composition, color palette, mood, focal elements, textures, etc., 
-        then you’ll craft a single, detailed instruction for an image-generation model (e.g. Stable Diffusion or DALL·E) 
-        that captures the essence of the user’s photo and suggest an evocative art style or approach. Only return the prompt, start your response with "based on the provided image, generate".`
+        `You are a creative prompt engineer. You will first analyze an image in terms of 
+        composition, color palette, mood, focal elements, textures, etc., 
+        then you’ll craft a single, detailed instruction for an image-generation model 
+        (e.g. Stable Diffusion or DALL·E) that captures the essence of the user’s photo. 
+        Suggest a varied art style or approach—this might be 
+        watercolor, charcoal sketch, oil painting, photorealism, collage, ink drawing, 3D render, impressionism, 
+        or any other evocative medium that best complements the image’s mood. 
+        Only return the prompt; start your response with “based on the provided image, generate.”
+`
       },
       {
         role: 'user',

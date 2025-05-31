@@ -14,7 +14,7 @@ export default function Page() {
   };
 
   const handleGenerateStyledImage = async () => {
-    if (!image || !prompt) return;
+    if (!image) return;
     setLoading(true);
 
     try {
@@ -29,7 +29,8 @@ export default function Page() {
       const imageUrl = uploadData.imageUrl;
 
       if (!imageUrl) {
-        console.error('Failed to upload image');
+        console.error('Failed to upload image', uploadData.error);
+        setPrompt(uploadData.error);
         setLoading(false);
         return;
       }
@@ -70,7 +71,7 @@ export default function Page() {
   };
 
   return (
-    <section className="flex flex-col items-center">
+    <section className="flex flex-col">
       <h1 className="font-semibold text-2xl mb-8 tracking-tighter">Upload any photos to get inspiration! </h1>
       
 
@@ -78,23 +79,23 @@ export default function Page() {
       <ImageUploader onImageUpload={handleImageUpload} />
 
       {/* Style Prompt Input */}
-      <input
+      {/* <input
         type="text"
         placeholder="Describe the desired art style, e.g., 'Impressionist'"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
         className="mb-4 p-2 border rounded-md w-full"
-      />
-
+      /> */}
+      <p>{prompt}</p>
       {/* Generate Styled Image Button */}
       <button
         onClick={handleGenerateStyledImage}
-        className="px-4 py-2 bg-blue-500 text-white rounded-md mb-4"
+        className="px-4 py-2 bg-black text-white mb-4"
         disabled={loading}
       >
         {loading ? "Generating..." : "Generate Styled Image"}
       </button>
-      <p>(warning: it's slow)</p>
+      {/* <p>(warning: it's slow)</p> */}
       {/* Display Generated Image */}
       {generatedImage && (
         <div className="mt-4">

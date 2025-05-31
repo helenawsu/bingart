@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ imageUrl: uploadResponse.secure_url });
   } catch (error) {
     console.error('Error uploading image:', error);
-    return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to upload image: '+ error.message }, { status: 500 }, );
   }
 }
 

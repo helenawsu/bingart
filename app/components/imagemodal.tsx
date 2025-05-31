@@ -13,6 +13,7 @@ interface ImageModalProps {
 }
 
 export default function ImageModal({ isOpen, selectedImage, closeModal, language }: ImageModalProps) {
+  console.log("language in imagemodal.tsx", language);
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>

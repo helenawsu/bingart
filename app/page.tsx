@@ -10,7 +10,7 @@ export default function Page() {
   const handleLanguageChange = (newLanguage: string) => {
     setLanguage(newLanguage); // Update language when changed
   };
-
+console.log("language in page.tsx", language);
   return (
     <section>
       <LanguageSwitcher onLanguageChange={handleLanguageChange} />

@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
 
     // Prepare the message for OpenAI's vision model
     const fileId = await createFile(imageFilePath);
+    console.log(language, "what is the language");
     const languageAddOn = language === 'en' ? '' : '请用中文回答。';
     const messages: { role: 'system' | 'user' | 'assistant'; content: any; name?: string }[] = [
       {

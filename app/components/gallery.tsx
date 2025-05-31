@@ -11,10 +11,10 @@ interface GalleryProps {
   language: string; // Language prop for the component
 }
 
-export default function Gallery({ images }: GalleryProps, language: string) {
+export default function Gallery({ images, language }: GalleryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
+  console.log("language in gallery.tsx", language);
   const openModal = (src: any) => {
     setSelectedImage(src.url);
     setIsOpen(true);
