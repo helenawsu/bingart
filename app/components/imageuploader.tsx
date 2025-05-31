@@ -26,7 +26,7 @@ export default function ImageUploader({ onImageUpload }: ImageUploaderProps) {
       <input type="file" accept="image/*" onChange={handleImageUpload} className="mb-4" />
       {image && (
         <div className="mt-4">
-          <img src={image} alt="Uploaded" className="max-w-full h-auto rounded-md shadow-md" />
+          <img src={image} alt="Uploaded" className="h-auto rounded-md shadow-md" />
         </div>
       )}
     </div>

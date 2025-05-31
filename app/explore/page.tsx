@@ -55,16 +55,24 @@ export default function Page() {
         body: JSON.stringify({ imageurl: image, prompt: stylePrompt.response }),
       });
 
-      const styleData = await styleResponse.json();
+      let styleData;
+      try {
+        styleData = await styleResponse.json();
+      } catch (err) {
+        const text = await styleResponse.text();
+        throw new Error(`Style generation error: ${text}`);
+      }
       console.log('Style Data:', styleData);
       if (styleData.imageUrl) {
         console.log('Generated image URL:', styleData.imageUrl);
         setGeneratedImage(styleData.imageUrl);
       } else {
         console.error('Error in generating styled image:', styleData.error);
+        setPrompt(styleData.error || 'Failed to generate styled image');
       }
     } catch (error) {
       console.error("Error generating styled image:", error);
+      setPrompt(error.message || 'Unknown error');
     } finally {
       setLoading(false);
     }
