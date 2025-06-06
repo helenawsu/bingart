@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { OpenAI } from 'openai';
 import fs from 'fs';
 import path from 'path';
+export const maxDuration = 60; //please give me more time TATAT
 
 const openai = new OpenAI({
   apiKey: process.env.AI_API_KEY,

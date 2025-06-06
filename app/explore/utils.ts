@@ -49,9 +49,9 @@ function parseFrontmatter(fileContent: string) {
 //   })
 // }
 
-// export function getBlogPosts() {
-//   return getMDXData(path.join(process.cwd(), 'app', 'explore', 'posts'))
-// }
+export function getBlogPosts() {
+  return null
+}
 
 export function formatDate(date: string, includeRelative = false) {
   let currentDate = new Date()

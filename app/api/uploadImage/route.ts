@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
+export const maxDuration = 60; //please give me more time TATAT
 
 // Cloudinary configuration
 cloudinary.config({
