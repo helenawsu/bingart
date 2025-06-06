@@ -10,7 +10,9 @@ interface ChatBotProps {
 
 export default function ChatBot({ selectedImage, language }: ChatBotProps) {
   console.log("language in chatbot.tsx", language);
-  let init_message = language === 'en' ? 'Analyzing image...' : '正在分析图像...';
+let init_message = language === 'en' 
+  ? 'Let me take a close look at this painting...' 
+  : '让我仔细看一下这幅画...';  
   const [messages, setMessages] = useState([{ sender: 'bot', text: init_message }]);
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -93,7 +95,7 @@ export default function ChatBot({ selectedImage, language }: ChatBotProps) {
             {msg.text}
           </p>
         ))}
-        {loading && <p className="text-blue-500">AI is analyzing the image...</p>}
+        {loading && <p className="text-gray-500">{language === "en" ? "loading..." : "分析中"}</p>}
       </div>
       <form onSubmit={handleUserInput} className="flex items-center">
         <input
