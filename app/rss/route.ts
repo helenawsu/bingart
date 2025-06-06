@@ -2,7 +2,16 @@ import { baseUrl } from 'app/sitemap'
 import { getBlogPosts } from 'app/explore/utils'
 
 export async function GET() {
-  let allBlogs = await getBlogPosts()
+  type BlogPost = {
+    slug: string
+    metadata: {
+      title: string
+      summary?: string
+      publishedAt: string
+    }
+  }
+
+  let allBlogs: BlogPost[] = (await getBlogPosts()) || []
 
   const itemsXml = allBlogs
     .sort((a, b) => {
