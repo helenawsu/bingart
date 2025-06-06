@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useState } from 'react';
 import ImageUploader from 'app/components/imageuploader';
-import { LanguageContext } from '../layout';
+import { LanguageContext } from '../context/language';
 
 export default function Page() {
   const { language } = useContext(LanguageContext);

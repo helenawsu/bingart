@@ -1,5 +1,19 @@
 "use client"
- const metadata: Metadata = {
+import './global.css'
+import type { Metadata } from 'next'
+import { GeistSans } from 'geist/font/sans'
+import { GeistMono } from 'geist/font/mono'
+import { Navbar } from './components/nav'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import Footer from './components/footer'
+import { baseUrl } from './sitemap'
+import { useState } from 'react'
+import { LanguageContext } from './context/language'
+
+const cx = (...classes) => classes.filter(Boolean).join(' ')
+
+const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
     default: 'Next.js Portfolio Starter',
@@ -26,25 +40,6 @@
     },
   },
 }
-
-import './global.css'
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Navbar } from './components/nav'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import Footer from './components/footer'
-import { baseUrl } from './sitemap'
-import { createContext, useState } from 'react'
-
-const cx = (...classes) => classes.filter(Boolean).join(' ')
-
-// Create context
-export const LanguageContext = createContext<{language: string, setLanguage: (lang: string) => void}>({
-  language: 'en',
-  setLanguage: () => {},
-});
 
 export default function RootLayout({
   children,

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { BlogPosts } from 'app/components/posts';
 import Gallery from 'app/components/gallery';
 import { images } from 'app/data/images';
-import { LanguageContext } from './layout';
+import { LanguageContext } from './context/language';
 
 export default function Page() {
   const { language } = useContext(LanguageContext);
