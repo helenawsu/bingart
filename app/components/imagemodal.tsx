@@ -51,16 +51,18 @@ export default function ImageModal({ isOpen, selectedImage, closeModal, language
                 {/* Responsive layout: Image on top for mobile, side by side for desktop */}
                 <div className="flex flex-col md:flex-row">
                   {/* Image section */}
-                  <div className="w-full md:w-1/2 md:pr-4 mb-4 md:mb-0">
+                  <div className="w-full md:w-1/2 md:pr-4 mb-4 md:mb-0 flex items-center justify-center">
                     {selectedImage && (
-                      <Image
-                        src={selectedImage}
-                        alt="Selected image"
-                        width={800}
-                        height={600}
-                        objectFit="contain"
-                        className="rounded-lg"
-                      />
+                      <div className="w-full">
+                        <Image
+                          src={selectedImage}
+                          alt="Selected image"
+                          width={800}
+                          height={600}
+                          className="rounded-lg w-full h-auto max-h-[60vh] md:max-h-[80vh] object-contain"
+                          style={{ objectFit: 'contain' }}
+                        />
+                      </div>
                     )}
                   </div>
 

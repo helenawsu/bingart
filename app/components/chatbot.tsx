@@ -10,7 +10,8 @@ interface ChatBotProps {
 
 export default function ChatBot({ selectedImage, language }: ChatBotProps) {
   console.log("language in chatbot.tsx", language);
-  const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hello! Let me analyze the painting for you...' }]);
+  let init_message = language === 'en' ? 'Analyzing image...' : '正在分析图像...';
+  const [messages, setMessages] = useState([{ sender: 'bot', text: init_message }]);
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
@@ -19,7 +20,7 @@ export default function ChatBot({ selectedImage, language }: ChatBotProps) {
   useEffect(() => {
     if (selectedImage) {
       // Clear previous messages immediately when a new image is selected
-      setMessages([{ sender: 'bot', text: 'Hello! Let me analyze the painting for you...' }]);
+      setMessages([{ sender: 'bot', text: init_message }]);
       // Abort any previous request
       if (abortRef.current) {
         abortRef.current.abort();
@@ -81,13 +82,14 @@ export default function ChatBot({ selectedImage, language }: ChatBotProps) {
       setLoading(false); // End loading state
     }
   };
-
+  let placeholderText = language === 'en' ? 'Ask something about this paiting...' : '问关于这张画的问题...';
+  let sendText = language === 'en' ? 'Send' : '发送';
   return (
     <div className="flex flex-col bg-gray-100 p-4 rounded-lg">
       <div className="flex-grow overflow-auto mb-4">
         {messages.map((msg, index) => (
-          <p key={index} className={`mb-2 ${msg.sender === 'bot' ? 'text-blue-500' : 'text-gray-700'} `}>
-            <strong>{msg.sender === 'bot' ? 'AI' : 'You'}: </strong>
+          <p key={index} className={`mb-2 ${msg.sender === 'bot' ? 'text-black' : 'text-gray-700'} `}>
+            <strong>{msg.sender === 'bot' ? '🎨' : 'You'}: </strong>
             {msg.text}
           </p>
         ))}
@@ -98,16 +100,16 @@ export default function ChatBot({ selectedImage, language }: ChatBotProps) {
           type="text"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
-          placeholder="Ask something about this image..."
+          placeholder={placeholderText}
           className="w-full p-2 border rounded-md focus:outline-none text-black"
           disabled={loading}
         />
         <button
           type="submit"
-          className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+          className="ml-2 px-4 py-2 bg-black text-white rounded-md min-w-[64px] flex items-center justify-center"
           disabled={loading}
         >
-          Send
+          {sendText}
         </button>
       </form>
     </div>

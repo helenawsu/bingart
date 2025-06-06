@@ -1,8 +1,10 @@
 "use client";
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ImageUploader from 'app/components/imageuploader';
+import { LanguageContext } from '../layout';
 
 export default function Page() {
+  const { language } = useContext(LanguageContext);
   const [image, setImage] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [prompt, setPrompt] = useState('');
@@ -100,11 +102,13 @@ export default function Page() {
 
   return (
     <section className="flex flex-col">
-      <h1 className="font-semibold text-2xl mb-8 tracking-tighter">Upload any photos to get inspiration! </h1>
+      <h1 className="font-semibold text-2xl mb-8 tracking-tighter">
+        {language === 'en' ? 'Upload any photos to get inspiration!' : '上传照片获取灵感！'}
+      </h1>
       
 
       {/* ImageUploader Component */}
-      <ImageUploader onImageUpload={handleImageUpload} />
+      <ImageUploader onImageUpload={handleImageUpload} language={language}/>
 
       {/* Style Prompt Input */}
       {/* <input
@@ -116,18 +120,21 @@ export default function Page() {
       /> */}
       <p>{prompt}</p>
       {/* Generate Styled Image Button */}
+      <div className="mt-6" />
       <button
         onClick={handleGenerateStyledImage}
         className="px-4 py-2 bg-black text-white mb-4"
         disabled={loading}
       >
-        {loading ? "Generating..." : "Generate Styled Image"}
+        {loading
+          ? (language === 'en' ? "Generating..." : "生成中...")
+          : (language === 'en' ? "Generate Styled Image" : "生成风格图像")}
       </button>
       {/* <p>(warning: it's slow)</p> */}
       {/* Display Generated Image */}
       {generatedImage && (
         <div className="mt-4">
-          <img src={generatedImage} alt="Generated art" className="max-w-full h-auto rounded-md shadow-md" />
+          <img src={generatedImage} alt="Generated art" className="max-w-full h-auto shadow-md" />
         </div>
       )}
     </section>
