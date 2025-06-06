@@ -70,6 +70,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Overpass+Mono:wght@300..700&display=swap" rel="stylesheet" />
+                <link rel="icon" href="/Hicon32.ico" sizes="any" />
+
       </head>
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
         <LanguageContext.Provider value={{ language, setLanguage }}>
