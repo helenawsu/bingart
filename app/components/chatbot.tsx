@@ -72,6 +72,7 @@ let init_message = language === 'en'
       const response = await axios.post('/api/chat', {
         prompt: userInput,  // User's prompt
         imagePath: selectedImage,  // Image path from public/images
+        language: language,  
       });
 
       const botResponse = { sender: 'bot', text: response.data.response };

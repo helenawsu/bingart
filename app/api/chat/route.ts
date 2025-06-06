@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     // Prepare the message for OpenAI's vision model
     const fileId = await createFile(imageFilePath);
     console.log(language, "what is the language");
-    const languageAddOn = language === 'en' ? '' : '请用中文回答。';
+    const languageAddOn = language === 'en' ? 'please answer in english' : '请用中文回答。';
     const messages: { role: 'system' | 'user' | 'assistant'; content: any; name?: string }[] = [
       {
         role: 'system',
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
       {
         role: 'user',
       content: [
-        { type: "input_text", text: `Analyze this painting. The user asks: "${prompt}". Keep your response within 100 words.` + languageAddOn },
+        { type: "input_text", text: `Analyze this painting if the user didn't ask anythinig. Otherwise, focus on answering the user's question. The user asks: "${prompt}". Keep your response within 50 words.` + languageAddOn },
         {
           type: "input_image",
           file_id: fileId,
