@@ -73,7 +73,7 @@ export default function Gallery({ images, language }: GalleryProps) {
                 alt={`Gallery image ${index + 1}`}
                 layout="fill"
                 objectFit="cover"
-                className="rounded-md"
+                className=""
               />
             </div>
           );
