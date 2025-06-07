@@ -134,7 +134,12 @@ export default function Page() {
       {/* Display Generated Image */}
       {generatedImage && (
         <div className="mt-4">
-          <img src={generatedImage} alt="Generated art" className="max-w-full h-auto shadow-md" />
+          <img
+            src={generatedImage}
+            alt="Generated art"
+            className="max-w-full h-auto shadow-md max-h-64"
+            style={{ maxHeight: '32rem' }}
+          />
         </div>
       )}
     </section>
