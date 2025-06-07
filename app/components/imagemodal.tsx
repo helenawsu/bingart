@@ -4,15 +4,21 @@ import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { Fragment } from 'react';
 import ChatBot from './chatbot';  // Import the ChatBot component
+import { images } from 'app/data/images'; // Import images to get color
 
 interface ImageModalProps {
   isOpen: boolean;
   selectedImage: string | null;  // Image path from public/images
   closeModal: () => void;
   language: string; 
+  // Optionally, you could add selectedImageObj?: { url: string; color?: string }
 }
 
 export default function ImageModal({ isOpen, selectedImage, closeModal, language }: ImageModalProps) {
+  // Find the image object to get its color
+  const imageObj = images.find(img => img.url === selectedImage);
+  const bgColor = imageObj?.color || "#fff";
+
   console.log("language in imagemodal.tsx", language);
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -26,7 +32,8 @@ export default function ImageModal({ isOpen, selectedImage, closeModal, language
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          {/* Modal background uses image color */}
+          <div className="fixed inset-0" style={{ backgroundColor: bgColor, opacity: 0.85 }} />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">

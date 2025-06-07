@@ -85,7 +85,7 @@ let init_message = language === 'en'
       setLoading(false); // End loading state
     }
   };
-  let placeholderText = language === 'en' ? 'Ask something about this paiting...' : '问关于这张画的问题...';
+  let placeholderText = language === 'en' ? 'Ask something about this painting...' : '问关于这张画的问题...';
   let sendText = language === 'en' ? 'Send' : '发送';
   return (
     <div className="flex flex-col bg-gray-100 p-4 rounded-lg">
