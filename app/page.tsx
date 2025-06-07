@@ -18,7 +18,6 @@ export default function Page() {
           <pre className="mb-4 whitespace-pre-wrap break-words">{`let it happen
 let it come 
 let it leave
-let it happen
 everything accompanied
 in this world 
 was belonged to you 
