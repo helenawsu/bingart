@@ -49,7 +49,7 @@ export default function Page() {
       const promptResponse = await fetch('/api/getPrompt', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imagePath: imageUrl, prompt: prompt }),
+        body: JSON.stringify({ imagePath: imageUrl, prompt: selectedMedia, language: language }),
       });
 
       let stylePrompt;
@@ -99,25 +99,52 @@ export default function Page() {
       setLoading(false);
     }
   };
+const mediaOptions = [
+  { zh: '水墨画', en: 'Ink Painting' },
+  { zh: '素描', en: 'Sketch' },
+  { zh: '油画', en: 'Oil Painting' },
+  { zh: '版画', en: 'Printmaking' },
+  { zh: '水彩画', en: 'Watercolor' },
+  { zh: '漫画', en: 'Manga/Comic' },
+];
+const [selectedMedia, setSelectedMedia] = useState('水墨画');
 
   return (
     <section className="flex flex-col">
       <h1 className="font-semibold text-2xl mb-8 tracking-tighter">
         {language === 'en' ? 'Upload any photos to get inspiration!' : '上传照片获取灵感！'}
       </h1>
-      
+      <p className="  font-semibold mb-2 tracking-tighter">
+        {language === 'en' ? 'Step 1: choose a photo from your album.' : '第一步：从相册中选择一张照片。'}
+      </p>
 
       {/* ImageUploader Component */}
-      <ImageUploader onImageUpload={handleImageUpload} language={language}/>
-
-      {/* Style Prompt Input */}
-      {/* <input
-        type="text"
-        placeholder="Describe the desired art style, e.g., 'Impressionist'"
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        className="mb-4 p-2 border rounded-md w-full"
-      /> */}
+      <ImageUploader onImageUpload={handleImageUpload} language={language} />
+      <p className="font-semibold mb-2 mt-4 tracking-tighter">
+        {language === 'en' ? 'Step 2: choose an art media.' : '第二步：选择一种媒介。'}
+      </p> <div className="flex flex-wrap gap-3">
+        {mediaOptions.map((option) => {
+          const label = language === 'en' ? option.en : option.zh;
+          return (
+            <label
+              key={option.zh}
+              className={`flex items-center space-x-2 px-3 py-1  bg-gray-100 cursor-pointer ${
+                selectedMedia === option.zh ? 'ring-2 ring-black' : ''
+              }`}
+            >
+              <input
+                type="radio"
+                name="media"
+                value={option.zh}
+                checked={selectedMedia === option.zh}
+                onChange={() => setSelectedMedia(option.zh)}
+  className="appearance-none w-3 h-3 border border-black  checked:bg-black"
+              />
+              <span className="text">{label}</span>
+            </label>
+          );
+        })}
+      </div>
       <p>{prompt}</p>
       {/* Generate Styled Image Button */}
       <div className="mt-6" />
